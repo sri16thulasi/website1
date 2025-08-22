@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details - Elegant Women Fashion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    html, body {
+  height: 100%;
+  position: relative;
+  overflow-x: hidden; /* prevent horizontal scroll from floating shapes */
+}
+
+
+    .navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Poppins', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #d95d89;
+  letter-spacing: 1px;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 600;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+  color: #d95d89;
+}
+
+.shopping-bag {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.shopping-bag:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+/* Shopping bag circle */
+.bag-circle {
+  width: 50px;             /* equal width and height */
+  height: 50px;
+  border-radius: 50%;      /* perfect circle */
+  background-color: #fff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;  /* center horizontally */
+  align-items: center;      /* center vertically */
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+/**.cart-count {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: #fff;
+  color: #d95d89;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 50%;
+  border: 2px solid #d95d89;
+  min-width: 18px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+**/
+
+/**.cart-count, .wishlist-count {
+  background: #d95d89;
+  color: #fff;
+  border-radius: 50%;
+  padding: 2px 8px;
+  font-size: 12px;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  margin-left: 0; 
+  vertical-align: top;
+}**/
+
+.bag-circle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.bag-icon {
+  width: 24px;
+  height: 24px;
+   object-fit: contain;   
+}
+
+
+/* Dropdown menu */
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  min-width: 200px;
+  flex-direction: column;
+  z-index: 100;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+ 
+}
+
+.dropdown.show {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* icon + text */
+  padding: 12px 20px;
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+  transition: background 0.3s, color 0.3s;
+}
+
+.dropdown a:hover {
+  background: #fce4ec;
+  color: #d95d89;
+  font-weight: 600;
+}
+.dropdown-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Show dropdown on hover */
+.shopping-bag:hover .dropdown {
+  display: flex;
+}
+
+/* Bounce animation for cart update */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-4px); }
+}
+
+.bounce {
+  animation: bounce 0.6s;
+}
+.floating-shape {
+  position: fixed; /* fixed so it stays visible even when scrolling */
+  border-radius: 50%;
+  background: rgba(217, 93, 137, 0.2);
+  z-index: 0;
+  filter: blur(80px);
+  animation: float 15s infinite alternate;
+  pointer-events: none; /* allow clicks through shapes */
+}
+
+.floating-shape.small { width: 120px; height: 120px; top: 50px; left: 30px; animation-duration: 12s; }
+.floating-shape.medium { width: 180px; height: 180px; top: 250px; right: 40px; animation-duration: 16s; }
+.floating-shape.large { width: 250px; height: 250px; bottom: 50px; left: 50%; transform: translateX(-50%); animation-duration: 20s; }
+
+@keyframes float {
+  0% { transform: translateY(0) translateX(0); }
+  50% { transform: translateY(-30px) translateX(20px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+
+
+    .navbar nav ul li a { text-decoration: none; color: #222; font-weight: 600; transition: color 0.3s; }
+    .navbar nav ul li a:hover, .navbar nav ul li a.active { color: #d95d89; font-weight: 600; }
+   .cart-count,.wishlist-count {  
+  background: #d95d89; color: #fff; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; vertical-align: top; }
+    .details-container { display: flex; flex-wrap: wrap; gap: 40px; padding: 50px; justify-content: center; }
+    .product-images { flex: 1 1 400px; }
+    .product-images img.main-img { display: block; width: 100%; height: auto; min-height: 300px; border-radius: 10px; margin-bottom: 15px; background: #f0f0f0; }
+    .thumbnail-images { display: flex; gap: 10px; }
+    .thumbnail-images img { display: block; width: 60px; height: 60px; object-fit: cover; cursor: pointer; border: 2px solid transparent; border-radius: 5px; background: #f0f0f0; }
+    .thumbnail-images img:hover { border-color: #d95d89; }
+    .product-info { flex: 1 1 350px; }
+    .product-info h1 { margin-bottom: 15px; }
+    .options { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; }
+    .btn-add-cart, .btn-add-wishlist { padding: 12px 25px; background: #d95d89; color: #fff; font-weight: 600; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; margin-right: 10px; }
+    .btn-add-cart:hover, .btn-add-wishlist:hover { background: #c14a74; }
+    .reviews { margin-top: 30px; border-top: 1px solid #ddd; padding-top: 20px; }
+    .reviews h3 { margin-bottom: 10px; }
+    .rating { color: #f5a623; margin-bottom: 5px; }
+    /**.related-products .products { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+    .related-products a.product-card { display: block; text-align: center; text-decoration: none; color: #000; padding: 15px; border-radius: 10px; background: #fff7f7; transition: background 0.3s; }
+    .related-products a.product-card:hover { background: #F7EDE2; }
+    .related-products a.product-card img { display: block; width: 100%; height: 200px; object-fit: contain; border-radius: 10px; margin-bottom: 10px; background: #f0f0f0; }**/
+    .related-products .products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.related-products a.product-card {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fff7f7;
+  transition: background 0.3s;
+}
+.related-products a.product-card:hover {
+  background: #F7EDE2;
+}
+.related-products a.product-card img {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background: #f0f0f0;
+}
+img:not([src]) {
+  background: #ddd;
+}
+  
+    .dialog-box { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+    .dialog-content { background: #fff; padding: 20px; border-radius: 8px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .dialog-content p { font-size: 1.1em; color: #222; margin: 0 0 20px; font-family: 'Poppins', sans-serif; }
+    .dialog-content button { padding: 10px 20px; background: #d95d89; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+    .dialog-content button:hover { background: #c14a74; }
+    
+  </style>
+</head>
+<body>
+  <!-- Decorative floating shapes -->
+<div class="floating-shape small"></div>
+<div class="floating-shape medium"></div>
+<div class="floating-shape large"></div>
+  <header class="navbar">
+  <div class="logo">Elegant Fashion</div>
+  <nav class="nav-container">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+<div class="shopping-bag" id="shopping-bag">
+  <div class="bag-circle">
+    <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="Bag" class="bag-icon">
+    
+  </div>
+
+
+<div class="dropdown">
+  <a href="cart.html">
+    <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" class="dropdown-icon" alt="Cart"> 
+    Cart <span id="cart-count-dropdown" class="cart-count">0</span>
+  </a>
+  <a href="wishlist.html">
+    <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" class="dropdown-icon" alt="Wishlist"> 
+    Wishlist <span id="wishlist-count" class="wishlist-count">0</span>
+  </a>
+  <a href="order-history.html">
+    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" class="dropdown-icon" alt="Orders"> 
+    Order History
+  </a>
+  <a href="track-order.html">
+    <img src="https://cdn-icons-png.flaticon.com/512/149/149059.png" class="dropdown-icon" alt="Track"> 
+    Track Order
+  </a>
+</div>
+
+</div>
+
+    
+  </nav>
+</header>
+
+
+
+  <section class="product-details">
+    <div class="details-container">
+      <div class="product-images">
+        <img src="" alt="Product Image" class="main-img">
+        <div class="thumbnail-images"></div>
+      </div>
+
+      <div class="product-info">
+        <h1 class="product-title"></h1>
+        <p class="price"></p>
+        <p class="description"></p>
+
+        <div class="options">
+          <label for="size">Size:</label>
+          <select id="size"></select>
+
+          <label for="color">Color:</label>
+          <select id="color"></select>
+        </div>
+
+        <button id="add-to-cart-btn" class="btn-add-cart">Add to Cart</button>
+        <button id="add-to-wishlist-btn" class="btn-add-wishlist">Add to Wishlist</button>
+
+        <div class="reviews">
+          <h3>Customer Reviews</h3>
+          <div class="rating">⭐⭐⭐⭐☆ (4/5)</div>
+          <p class="no-reviews">No reviews yet. Be the first to review this product!</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews-section">
+      <div class="review-card submit-review">
+        <h3>Write a Review</h3>
+        <div class="rating-select">
+          <label for="user-rating">Rating:</label>
+          <select id="user-rating">
+            <option value="5">⭐⭐⭐⭐⭐</option>
+            <option value="4">⭐⭐⭐⭐☆</option>
+            <option value="3">⭐⭐⭐☆☆</option>
+            <option value="2">⭐⭐☆☆☆</option>
+            <option value="1">⭐☆☆☆☆</option>
+          </select>
+        </div>
+        <textarea id="user-comment" rows="3" placeholder="Write your review here..."></textarea>
+        <button id="submit-review" class="btn-add-cart">Submit Review</button>
+      </div>
+
+      <div class="review-card user-reviews">
+        <h3>Customer Reviews</h3>
+        <ul id="reviews-list"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="related-products">
+    <h2>Related Products</h2>
+    <div class="products" id="related-products"></div>
+  </section>
+
+  <div id="dialog-box" class="dialog-box">
+    <div class="dialog-content">
+      <p id="dialog-message"></p>
+      <button id="dialog-close">Close</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Elegant Fashion. All rights reserved.</p>
+      <div class="socials">
+        <a href="#">Instagram</a> | 
+        <a href="#">Facebook</a> | 
+        <a href="#">Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Product data with Unsplash URLs
+  const productsData = [
+  // Dresses
+  {
+    id: 1,
+    title: "Summer Dress",
+    price: 49.99,
+    desc: "A light and airy summer dress for warm days.",
+    images: ["https://i.pinimg.com/736x/dd/d1/f7/ddd1f7eea60be6774bce56a3e50f4a95.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Pink", "Beige", "White"],
+    category: "dresses"
+  },
+  {
+    id: 6,
+    title: "Evening Gown",
+    price: 79.99,
+    desc: "Elegant gown for evening events.",
+    images: ["https://i.pinimg.com/1200x/12/65/3f/12653f88ab9ee8d64f0d854c09f17b07.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Red", "Black"],
+    category: "dresses"
+  },
+  {
+    id: 9,
+    title: "Floral Midi Dress",
+    price: 54.99,
+    desc: "A chic floral midi dress for versatile wear.",
+    images: ["https://i.pinimg.com/736x/dc/57/c6/dc57c6aa32957a590dad4a2c7c6037b8.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Pink", "White"],
+    category: "dresses"
+  },
+  {
+    id: 10,
+    title: "Party Dress",
+    price: 69.99,
+    desc: "Stylish dress perfect for parties.",
+    images: ["https://i.pinimg.com/736x/ed/6c/77/ed6c7725deab036d71f66f18a01c6c04.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Black", "Gold"],
+    category: "dresses"
+  },
+  {
+    id: 20,
+    title: "Designer Dress",
+    price: 89.99,
+    desc: "Premium designer dress for special occasions.",
+    images: ["https://i.pinimg.com/736x/5b/22/2e/5b222ecc0895ed5c8dadc8350abb5041.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Blue", "Black"],
+    category: "dresses"
+  },
+  {
+    id: 21,
+    title: "Maxi Dress",
+    price: 59.99,
+    desc: "Elegant maxi dress for a flowing look.",
+    images: ["https://i.pinimg.com/736x/84/8e/1f/848e1f5a45022ebfa490e962ffef0f0a.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Green", "Beige"],
+    category: "dresses"
+  },
+  // Tops
+  {
+    id: 2,
+    title: "Elegant Top",
+    price: 29.99,
+    desc: "A stylish top for casual and office wear.",
+    images: ["https://as2.ftcdn.net/v2/jpg/15/75/74/29/1000_F_1575742910_Jt5v4exXOL0JffhHqx5npONaJ2j0KeaA.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["White", "Black", "Blue"],
+    category: "tops"
+  },
+  {
+    id: 7,
+    title: "Casual Shirt",
+    price: 24.99,
+    desc: "Comfortable shirt for everyday wear.",
+    images: ["https://i.pinimg.com/736x/bc/2d/70/bc2d70dd00a39b3cccd2795d8810bcc6.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["White", "Grey"],
+    category: "tops"
+  },
+  {
+    id: 11,
+    title: "Stylish Blouse",
+    price: 34.99,
+    desc: "Trendy blouse for a fashionable look.",
+    images: ["https://i.pinimg.com/1200x/8e/ea/4c/8eea4c7134eac79ae15df88f6497c873.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Pink", "White"],
+    category: "tops"
+  },
+  {
+    id: 12,
+    title: "Trendy Crop Top",
+    price: 19.99,
+    desc: "Chic crop top for a modern style.",
+    images: ["https://i.pinimg.com/1200x/78/8b/6c/788b6c7d9768e03963cffeafbe6cc3b1.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Black", "Yellow"],
+    category: "tops"
+  },
+  {
+    id: 22,
+    title: "Formal Top",
+    price: 39.99,
+    desc: "Elegant top for formal occasions.",
+    images: ["https://i.pinimg.com/736x/19/58/a9/1958a90d4da2f481b574d6ca4cd4c6aa.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["White", "Navy"],
+    category: "tops"
+  },
+  {
+    id: 23,
+    title: "Tank Top",
+    price: 14.99,
+    desc: "Casual tank top for warm weather.",
+    images: ["https://i.pinimg.com/736x/63/1c/22/631c220f0871f1e7e76763dd9b92ebed.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Red", "White"],
+    category: "tops"
+  },
+  // Pants
+  {
+    id: 3,
+    title: "Casual Pants",
+    price: 39.99,
+    desc: "Comfortable pants for daily wear.",
+    images: ["https://i.pinimg.com/736x/a6/db/5d/a6db5d6e298dcdb76f5a93ff28bbc51f.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Black", "Beige"],
+    category: "pants"
+  },
+  {
+    id: 8,
+    title: "Wide-leg Pants",
+    price: 44.99,
+    desc: "Stylish wide-leg pants for a bold look.",
+    images: ["https://i.pinimg.com/736x/12/41/eb/1241eb8c3971fefdfd5279c5fd288de8.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Black", "Grey"],
+    category: "pants"
+  },
+  {
+    id: 13,
+    title: "Slim Fit Jeans",
+    price: 49.99,
+    desc: "Trendy slim fit jeans for casual wear.",
+    images: ["https://i.pinimg.com/736x/00/14/50/00145035ceecbdd3fc29695f8e5b7568.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Blue", "Black"],
+    category: "pants"
+  },
+  {
+    id: 14,
+    title: "Office Trousers",
+    price: 59.99,
+    desc: "Formal trousers for professional settings.",
+    images: ["https://i.pinimg.com/736x/7f/8e/67/7f8e67c85a12c77228a9c1bc154c640c.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Black", "Navy"],
+    category: "pants"
+  },
+  {
+    id: 24,
+    title: "Cargo Pants",
+    price: 49.99,
+    desc: "Practical cargo pants with multiple pockets.",
+    images: ["https://i.pinimg.com/1200x/7c/2e/e0/7c2ee0eff12fb3f080b97944eb3b14dc.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Green", "Black"],
+    category: "pants"
+  },
+  {
+    id: 25,
+    title: "Joggers",
+    price: 34.99,
+    desc: "Comfortable joggers for casual wear.",
+    images: ["https://i.pinimg.com/736x/48/63/71/486371b94395e9bf85e78e50dd40ee61.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Grey", "Black"],
+    category: "pants"
+  },
+  // Skirts
+  {
+    id: 4,
+    title: "Chic Skirt",
+    price: 34.99,
+    desc: "Elegant skirt for versatile styling.",
+    images: ["https://i.pinimg.com/736x/9f/a3/b5/9fa3b5c63747fd21cc931c5e6053a5b7.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Pink", "Black"],
+    category: "skirts"
+  },
+  {
+    id: 15,
+    title: "Pleated Skirt",
+    price: 39.99,
+    desc: "Trendy pleated skirt for casual outings.",
+    images: ["https://i.pinimg.com/1200x/5b/5f/4d/5b5f4d10671ea8129820fcf9c52b1b53.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Blue", "Beige"],
+    category: "skirts"
+  },
+  {
+    id: 16,
+    title: "Mini Skirt",
+    price: 29.99,
+    desc: "Stylish mini skirt for a bold look.",
+    images: ["https://i.pinimg.com/736x/89/81/18/898118921555347d7b527e0b091d8d5e.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Black", "White"],
+    category: "skirts"
+  },
+  {
+    id: 28,
+    title: "Pleated Midi Skirt",
+    price: 12.04,
+    desc: "Elegant pleated midi skirt for versatile wear.",
+    images: ["https://i.pinimg.com/1200x/e8/ab/7c/e8ab7c1fa448cf5319fdac66a753e8a3.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Beige", "Grey"],
+    category: "skirts"
+  },
+  {
+    id: 29,
+    title: "A-Line Casual Skirt",
+    price: 10.83,
+    desc: "Comfortable A-line skirt for casual outings.",
+    images: ["https://i.pinimg.com/736x/18/fb/71/18fb71d3955846a941b1703aec9d17eb.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Blue", "White"],
+    category: "skirts"
+  },
+  {
+    id: 30,
+    title: "High Waist Pencil Skirt",
+    price: 13.24,
+    desc: "Sleek high waist pencil skirt for professional looks.",
+    images: ["https://i.pinimg.com/736x/c1/63/5e/c1635ef53875c2a578052f682818d2c9.jpg"],
+    sizes: ["S", "M", "L"],
+    colors: ["Black", "Navy"],
+    category: "skirts"
+  },
+  // Accessories
+  {
+    id: 5,
+    title: "Stylish Hat",
+    price: 19.99,
+    desc: "Fashionable hat to complement your outfit.",
+    images: ["https://i.pinimg.com/1200x/09/e9/78/09e978dbbdd0916ec49262a04f865608.jpg"],
+    sizes: ["One Size"],
+    colors: ["Red", "Beige"],
+    category: "accessories"
+  },
+  {
+    id: 17,
+    title: "Leather Belt",
+    price: 24.99,
+    desc: "Durable leather belt for a polished look.",
+    images: ["https://i.pinimg.com/736x/45/bf/ff/45bfff4414489d101fd2740bed7ae660.jpg"],
+    sizes: ["One Size"],
+    colors: ["Black", "Brown"],
+    category: "accessories"
+  },
+  {
+    id: 18,
+    title: "Elegant Scarf",
+    price: 29.99,
+    desc: "Light scarf to add style and warmth.",
+    images: ["https://i.pinimg.com/1200x/9e/df/31/9edf3144107e899381b126ce1bf147b9.jpg"],
+    sizes: ["One Size"],
+    colors: ["Pink", "White"],
+    category: "accessories"
+  },
+  {
+    id: 19,
+    title: "Handbag",
+    price: 59.99,
+    desc: "Stylish handbag for everyday use.",
+    images: ["https://i.pinimg.com/1200x/5d/f6/08/5df60843b10de0e4b8409554370e2faa.jpg"],
+    sizes: ["One Size"],
+    colors: ["Black", "Beige"],
+    category: "accessories"
+  },
+  {
+    id: 26,
+    title: "Gold Necklace",
+    price: 99.99,
+    desc: "Elegant gold necklace for a luxurious touch.",
+    images: ["https://i.pinimg.com/736x/a7/68/fa/a768fa525dd391bccf69bcb93f211742.jpg"],
+    sizes: ["One Size"],
+    colors: ["Gold"],
+    category: "accessories"
+  },
+  {
+    id: 27,
+    title: "Trendy Sunglasses",
+    price: 24.99,
+    desc: "Stylish sunglasses for a trendy look.",
+    images: ["https://i.pinimg.com/1200x/5d/bf/29/5dbf29c600d9555252c1853d1928591d.jpg"],
+    sizes: ["One Size"],
+    colors: ["Black", "Brown"],
+    category: "accessories"
+  }
+];
+
+
+
+  // Show dialog box
+  function showDialog(message) {
+    const dialogBox = document.getElementById('dialog-box');
+    const dialogMessage = document.getElementById('dialog-message');
+    dialogMessage.textContent = message;
+    dialogBox.style.display = 'flex';
+  }
+
+  // Close dialog box
+  document.getElementById('dialog-close').addEventListener('click', () => {
+    document.getElementById('dialog-box').style.display = 'none';
+  });
+
+  // Update cart count
+  function updateCartCount() {
+    const cartCountElement = document.getElementById('cart-count-dropdown');
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    if (!Array.isArray(cart)) cart = [];
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+    cartCountElement.textContent = totalItems;
+  }
+
+  // Update wishlist count
+  function updateWishlistCount() {
+    const wishlistCountElement = document.getElementById('wishlist-count');
+    let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    if (!Array.isArray(wishlist)) wishlist = [];
+    wishlistCountElement.textContent = wishlist.length;
+  }
+
+  // Get product ID from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const productId = parseInt(urlParams.get('id')) || 1;
+  const product = productsData.find(p => p.id === productId);
+  if (!product) {
+    console.error('Product not found for ID:', productId);
+    document.querySelector('.product-title').innerText = 'Product Not Found';
+    document.getElementById('related-products').innerHTML = '<p>No related products available.</p>';
+    return;
+  }
+
+  // Fill product details
+  document.querySelector('.product-title').innerText = product.title;
+  document.querySelector('.price').innerText = `$${product.price.toFixed(2)}`;
+  document.querySelector('.description').innerText = product.desc;
+
+  const mainImg = document.querySelector('.main-img');
+  const thumbnailsDiv = document.querySelector('.thumbnail-images');
+  mainImg.src = product.images[0] || 'https://via.placeholder.com/500x300?text=Image+Not+Found';
+  mainImg.onerror = () => {
+    console.error(`Failed to load image: ${mainImg.src}`);
+    mainImg.src = 'https://via.placeholder.com/500x300?text=Image+Not+Found';
+  };
+
+  thumbnailsDiv.innerHTML = '';
+  product.images.forEach(imgSrc => {
+    const img = document.createElement('img');
+    img.src = imgSrc || 'https://via.placeholder.com/60x60?text=Thumb';
+    img.onerror = () => {
+      console.error(`Failed to load thumbnail: ${img.src}`);
+      img.src = 'https://via.placeholder.com/60x60?text=Thumb';
+    };
+    thumbnailsDiv.appendChild(img);
+    img.addEventListener('click', () => mainImg.src = imgSrc);
+  });
+
+  const sizeSelect = document.getElementById('size');
+  sizeSelect.innerHTML = product.sizes.map(s => `<option value="${s}">${s}</option>`).join('');
+
+  const colorSelect = document.getElementById('color');
+  colorSelect.innerHTML = product.colors.map(c => `<option value="${c}">${c}</option>`).join('');
+
+  // Add to Cart
+  const addToCartBtn = document.getElementById('add-to-cart-btn');
+  addToCartBtn.addEventListener('click', () => {
+    const size = sizeSelect.value;
+    const color = colorSelect.value;
+    if (!size || !color) {
+      showDialog('Please select size and color.');
+      return;
+    }
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    if (!Array.isArray(cart)) cart = [];
+    const cartItem = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      image: product.images[0],
+      size,
+      color,
+      quantity: 1
+    };
+    const existingIndex = cart.findIndex(item => item.id === product.id && item.size === size && item.color === color);
+    if (existingIndex !== -1) {
+      cart[existingIndex].quantity += 1;
+    } else {
+      cart.push(cartItem);
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    showDialog(`✅ "${product.title}" (Size: ${size}, Color: ${color}) added to cart!`);
+    updateCartCount();
+    triggerBagAnimation();
+  });
+
+  const bag = document.getElementById('shopping-bag');
+  const dropdown = bag.querySelector('.dropdown');
+  bag.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('show');
+  });
+
+  document.addEventListener('click', () => {
+    dropdown.classList.remove('show');
+  });
+
+  function triggerBagAnimation() {
+    const bag = document.getElementById('shopping-bag');
+    bag.classList.add('bounce');
+    setTimeout(() => bag.classList.remove('bounce'), 600);
+  }
+
+  // Add to Wishlist
+  // Add to Wishlist
+const addToWishlistBtn = document.getElementById('add-to-wishlist-btn');
+addToWishlistBtn.addEventListener('click', () => {
+  const size = sizeSelect.value;
+  const color = colorSelect.value;
+  if (!size || !color) {
+    showDialog('Please select size and color.');
+    return;
+  }
+  let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+  if (!Array.isArray(wishlist)) wishlist = [];
+  const wishlistItem = {
+    id: product.id,
+    title: product.title,
+    price: product.price,
+    image: product.images[0] || 'https://via.placeholder.com/80x80?text=Image+Not+Found',
+    size,
+    color,
+    currency: product.currency || '$'
+  };
+  const existingIndex = wishlist.findIndex(item => item.id === product.id && item.size === size && item.color === color);
+  if (existingIndex !== -1) {
+    showDialog(`"${product.title}" (Size: ${size}, Color: ${color}) is already in your wishlist!`);
+    return;
+  }
+  wishlist.push(wishlistItem);
+  localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  showDialog(`❤️ "${product.title}" (Size: ${size}, Color: ${color}) added to wishlist!`);
+  updateWishlistCount();
+  triggerBagAnimation();
+});
+  // Review submission
+  const submitBtn = document.getElementById('submit-review');
+  const reviewsList = document.getElementById('reviews-list');
+  const reviewMessage = document.querySelector('.no-reviews');
+  submitBtn.addEventListener('click', () => {
+    const rating = document.getElementById('user-rating').value;
+    const comment = document.getElementById('user-comment').value.trim();
+    if (!comment) {
+      showDialog('Please write a review before submitting!');
+      return;
+    }
+    reviewMessage.style.display = 'none';
+    const li = document.createElement('li');
+    li.style.marginBottom = '10px';
+    li.style.borderBottom = '1px solid #ddd';
+    li.style.paddingBottom = '5px';
+    li.innerHTML = `
+      <div class="review-rating">${"⭐".repeat(rating)}</div>
+      <div class="review-comment">${comment}</div>
+      <button class="remove-review" style="padding:3px 8px; margin-top:5px; background:#d9534f; color:white; border:none; border-radius:3px; cursor:pointer;">Remove</button>
+    `;
+    li.querySelector('.remove-review').addEventListener('click', () => {
+      li.remove();
+      if (reviewsList.children.length === 0) reviewMessage.style.display = 'block';
+    });
+    reviewsList.prepend(li);
+    document.getElementById('user-comment').value = '';
+  });
+
+  // Related Products
+  const relatedDiv = document.getElementById('related-products');
+  if (!relatedDiv) {
+    console.error('Related Products Div not found');
+    return;
+  }
+  relatedDiv.innerHTML = ''; // Clear previous content
+  console.log('Product ID:', productId);
+  console.log('Product:', product);
+  const relatedProducts = product ? productsData.filter(p => p.category.toLowerCase() === product.category.toLowerCase() && p.id !== product.id) : [];
+  console.log('Related Products:', relatedProducts);
+
+  if (relatedProducts.length > 0) {
+    relatedProducts.forEach(p => {
+      const a = document.createElement('a');
+      a.href = `product.html?id=${p.id}`;
+      a.className = 'product-card';
+      const imageSrc = p.images[0] && p.images[0] !== '' ? p.images[0] : 'https://via.placeholder.com/200x200?text=No+Image';
+      a.innerHTML = `
+        <img src="${imageSrc}" alt="${p.title}">
+        <h3>${p.title}</h3>
+        <p>$${p.price.toFixed(2)}</p>
+      `;
+      const img = a.querySelector('img');
+      img.onerror = () => {
+        console.error(`Failed to load image: ${img.src}`);
+        img.src = 'https://via.placeholder.com/200x200?text=No+Image';
+      };
+      relatedDiv.appendChild(a);
+    });
+  } else {
+    relatedDiv.innerHTML = '<p>No related products found in this category.</p>';
+  }
+
+  // Initialize counts
+  updateCartCount();
+  updateWishlistCount();
+});
+</script>
+</body>
+</html>

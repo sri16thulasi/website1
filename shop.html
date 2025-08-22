@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop - Elegant Women Fashion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #fefefe;
+      color: #222;
+      overflow-x: hidden;
+    }
+
+  
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; z-index: 10; }
+    .navbar .logo { font-weight: 700; font-size: 1.8em; color: #d95d89; }
+    .navbar nav ul { display: flex; gap: 25px; list-style: none; margin: 0; padding: 0; }
+    .navbar nav ul li a { text-decoration: none; color: #222; font-weight: 600; transition: color 0.3s; }
+    .navbar nav ul li a:hover, .navbar nav ul li a.active { color: #d95d89; font-weight: 600; }
+
+    /* Hero Section with corner circles */
+    .shop-hero {
+      text-align: center;
+      padding: 120px 20px 80px;
+      position: relative;
+      overflow: hidden;
+      background: #fef6f9;
+      background-image:
+        radial-gradient(circle at 25% 20%, rgba(217,93,137,0.1) 0%, transparent 60%),
+        radial-gradient(circle at 75% 80%, rgba(255,179,198,0.1) 0%, transparent 60%),
+        linear-gradient(120deg, rgba(240, 240, 250, 0.1) 25%, transparent 25%, transparent 50%, rgba(240, 240, 250, 0.1) 50%, rgba(240, 240, 250, 0.1) 75%, transparent 75%, transparent);
+      background-size: 40px 40px;
+    }
+    .shop-hero::before, .shop-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .shop-hero::before {
+      width: 180px;
+      height: 180px;
+      background: rgba(217,93,137,0.2);
+      top: -60px;
+      left: -60px;
+    }
+    .shop-hero::after {
+      width: 220px;
+      height: 220px;
+      background: rgba(255,179,198,0.2);
+      bottom: -80px;
+      right: -80px;
+    }
+    .shop-hero h1 {
+      font-size: 3em;
+      font-weight: 800;
+      background: linear-gradient(90deg, #d95d89, #ffb3c6, #ffd1dc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+      text-shadow: 0 4px 10px rgba(217,93,137,0.3), 0 8px 20px rgba(255,179,198,0.2);
+      display: inline-block;
+      position: relative;
+      padding-bottom: 10px;
+      z-index: 1;
+    }
+    .shop-hero h1::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+      width: 50%;
+      height: 4px;
+      border-radius: 2px;
+      background: linear-gradient(90deg, #d95d89, #ffb3c6);
+    }
+    .shop-hero p {
+      font-size: 1.2em;
+      color: #555;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Filter Buttons */
+    .shop-filters {
+      text-align: center;
+      padding: 30px 20px;
+    }
+    .filter-btn {
+      padding: 10px 25px;
+      margin: 5px;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      background: linear-gradient(90deg, #fddde6, #e0f7ff);
+      color: #d95d89;
+      box-shadow: 0 4px 10px rgba(217,93,137,0.1);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: linear-gradient(90deg, #d95d89, #ffb3c6);
+      color: #fff;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(217,93,137,0.3);
+    }
+
+    /* Products Grid with light background and corner circles */
+    .shop-products {
+      background: #f9faff;
+      padding: 60px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .shop-products::before, .shop-products::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      z-index: 0;
+    }
+    .shop-products::before {
+      width: 150px;
+      height: 150px;
+      background: rgba(217,93,137,0.1);
+      top: -40px;
+      right: -40px;
+    }
+    .shop-products::after {
+      width: 200px;
+      height: 200px;
+      background: rgba(255,179,198,0.1);
+      bottom: -60px;
+      left: -60px;
+    }
+    .shop-products .products {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      position: relative;
+      z-index: 1;
+    }
+    .product-card {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: #222;
+      border-radius: 25px;
+      overflow: hidden;
+      background: #fff;
+      padding: 20px;
+      width: 220px;
+      transition: all 0.4s;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      position: relative;
+      z-index: 1;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 30px rgba(217,93,137,0.15);
+    }
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      background: #f0f0f0;
+      transition: transform 0.4s;
+    }
+    .product-card:hover img { transform: scale(1.05); }
+    .product-card h3 { font-size: 1.2em; font-weight: 600; margin-bottom: 5px; }
+    .product-card p { font-size: 1em; font-weight: 500; color: #d95d89; }
+    .product-card button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      background: linear-gradient(90deg, #d95d89, #ffb3c6);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .product-card button:hover { background: linear-gradient(90deg, #ffb3c6, #d95d89); transform: scale(1.05); }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #fff;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+    }
+    footer .socials a { color: #d95d89; margin: 0 10px; text-decoration: none; font-weight: 600; transition: color 0.3s; }
+    footer .socials a:hover { color: #c14a74; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .shop-products .products { gap: 15px; }
+      .product-card { width: 45%; }
+    }
+    @media (max-width: 480px) {
+      .product-card { width: 100%; }
+      .shop-hero h1 { font-size: 2.2em; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Elegant Fashion</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html" class="active">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="shop-hero">
+    <h1>Explore Our Collection</h1>
+    <p>Stylish and elegant outfits curated just for women. Browse dresses, tops, pants, skirts, and accessories that elevate your wardrobe.</p>
+  </section>
+
+  <!-- Filters -->
+  <section class="shop-filters">
+    <button class="filter-btn" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="dresses">Dresses</button>
+    <button class="filter-btn" data-filter="tops">Tops</button>
+    <button class="filter-btn" data-filter="pants">Pants</button>
+    <button class="filter-btn" data-filter="skirts">Skirts</button>
+    <button class="filter-btn" data-filter="accessories">Accessories</button>
+  </section>
+
+  <!-- Products -->
+  <section class="shop-products">
+    <div class="products">
+      
+      <!-- Dresses -->
+<a href="product.html?id=1" class="product-card" data-category="dresses">
+  <img src="https://i.pinimg.com/736x/dd/d1/f7/ddd1f7eea60be6774bce56a3e50f4a95.jpg" alt="Summer Dress">
+  <h3>Summer Dress</h3>
+  <p>$49.99</p>
+</a>
+<a href="product.html?id=6" class="product-card" data-category="dresses">
+  <img src="https://i.pinimg.com/1200x/12/65/3f/12653f88ab9ee8d64f0d854c09f17b07.jpg" alt="Evening Gown">
+  <h3>Evening Gown</h3>
+  <p>$79.99</p>
+</a>
+<a href="product.html?id=9" class="product-card" data-category="dresses">
+  <img src="https://i.pinimg.com/736x/dc/57/c6/dc57c6aa32957a590dad4a2c7c6037b8.jpg" alt="Floral Midi Dress">
+  <h3>Floral Midi Dress</h3>
+  <p>$54.99</p>
+</a>
+<a href="product.html?id=10" class="product-card" data-category="dresses">
+  <img src="https://i.pinimg.com/736x/ed/6c/77/ed6c7725deab036d71f66f18a01c6c04.jpg" alt="Party Dress">
+  <h3>Party Dress</h3>
+  <p>$69.99</p>
+</a>
+
+<!-- Tops -->
+<a href="product.html?id=2" class="product-card" data-category="tops">
+  <img src="https://as2.ftcdn.net/v2/jpg/15/75/74/29/1000_F_1575742910_Jt5v4exXOL0JffhHqx5npONaJ2j0KeaA.jpg" alt="Elegant Top">
+  <h3>Elegant Top</h3>
+  <p>$29.99</p>
+</a>
+<a href="product.html?id=7" class="product-card" data-category="tops">
+  <img src="https://i.pinimg.com/736x/bc/2d/70/bc2d70dd00a39b3cccd2795d8810bcc6.jpg" alt="Casual Shirt">
+  <h3>Casual Shirt</h3>
+  <p>$24.99</p>
+</a>
+<a href="product.html?id=11" class="product-card" data-category="tops">
+  <img src="https://i.pinimg.com/1200x/8e/ea/4c/8eea4c7134eac79ae15df88f6497c873.jpg" alt="Stylish Blouse">
+  <h3>Stylish Blouse</h3>
+  <p>$34.99</p>
+</a>
+<a href="product.html?id=12" class="product-card" data-category="tops">
+  <img src="https://i.pinimg.com/1200x/78/8b/6c/788b6c7d9768e03963cffeafbe6cc3b1.jpg" alt="Crop Top">
+  <h3>Trendy Crop Top</h3>
+  <p>$19.99</p>
+</a>
+
+<!-- Pants -->
+<a href="product.html?id=3" class="product-card" data-category="pants">
+  <img src="https://i.pinimg.com/736x/a6/db/5d/a6db5d6e298dcdb76f5a93ff28bbc51f.jpg" alt="Casual Pants">
+  <h3>Casual Pants</h3>
+  <p>$39.99</p>
+</a>
+<a href="product.html?id=8" class="product-card" data-category="pants">
+  <img src="https://i.pinimg.com/736x/12/41/eb/1241eb8c3971fefdfd5279c5fd288de8.jpg" alt="Wide-leg Pants">
+  <h3>Wide-leg Pants</h3>
+  <p>$44.99</p>
+</a>
+<a href="product.html?id=13" class="product-card" data-category="pants">
+  <img src="https://i.pinimg.com/736x/00/14/50/00145035ceecbdd3fc29695f8e5b7568.jpg" alt="Slim Fit Jeans">
+  <h3>Slim Fit Jeans</h3>
+  <p>$49.99</p>
+</a>
+<a href="product.html?id=14" class="product-card" data-category="pants">
+  <img src="https://i.pinimg.com/736x/7f/8e/67/7f8e67c85a12c77228a9c1bc154c640c.jpg" alt="Office Trousers">
+  <h3>Office Trousers</h3>
+  <p>$59.99</p>
+</a>
+
+<!-- Skirts -->
+<a href="product.html?id=4" class="product-card" data-category="skirts">
+  <img src="https://i.pinimg.com/736x/9f/a3/b5/9fa3b5c63747fd21cc931c5e6053a5b7.jpg" alt="Chic Skirt">
+  <h3>Chic Skirt</h3>
+  <p>$34.99</p>
+</a>
+<a href="product.html?id=15" class="product-card" data-category="skirts">
+  <img src="https://i.pinimg.com/1200x/5b/5f/4d/5b5f4d10671ea8129820fcf9c52b1b53.jpg" alt="Pleated Skirt">
+  <h3>Pleated Skirt</h3>
+  <p>$39.99</p>
+</a>
+<a href="product.html?id=16" class="product-card" data-category="skirts">
+  <img src="https://i.pinimg.com/736x/89/81/18/898118921555347d7b527e0b091d8d5e.jpg" alt="Mini Skirt">
+  <h3>Mini Skirt</h3>
+  <p>$29.99</p>
+</a>
+
+<!-- Accessories -->
+<a href="product.html?id=5" class="product-card" data-category="accessories">
+  <img src="https://i.pinimg.com/1200x/09/e9/78/09e978dbbdd0916ec49262a04f865608.jpg" alt="Stylish Hat">
+  <h3>Stylish Hat</h3>
+  <p>$19.99</p>
+</a>
+<a href="product.html?id=17" class="product-card" data-category="accessories">
+  <img src="https://i.pinimg.com/736x/45/bf/ff/45bfff4414489d101fd2740bed7ae660.jpg" alt="Leather Belt">
+  <h3>Leather Belt</h3>
+  <p>$24.99</p>
+</a>
+<a href="product.html?id=18" class="product-card" data-category="accessories">
+  <img src="https://i.pinimg.com/1200x/9e/df/31/9edf3144107e899381b126ce1bf147b9.jpg" alt="Elegant Scarf">
+  <h3>Elegant Scarf</h3>
+  <p>$29.99</p>
+</a>
+<a href="product.html?id=19" class="product-card" data-category="accessories">
+  <img src="https://i.pinimg.com/1200x/5d/f6/08/5df60843b10de0e4b8409554370e2faa.jpg" alt="Handbag">
+  <h3>Handbag</h3>
+  <p>$59.99</p>
+</a>
+
+<!-- Extra Dresses -->
+<a href="product.html?id=20" class="product-card" data-category="dresses">
+  <img src="https://i.pinimg.com/736x/5b/22/2e/5b222ecc0895ed5c8dadc8350abb5041.jpg" alt="New Dress">
+  <h3>Designer Dress</h3>
+  <p>$89.99</p>
+</a>
+<!--<a href="product.html?id=21" class="product-card" data-category="dresses">
+  <img src="https://i.pinimg.com/736x/84/8e/1f/848e1f5a45022ebfa490e962ffef0f0a.jpg" alt="Maxi Dress">
+  <h3>Maxi Dress</h3>
+  <p>$59.99</p>
+</a>-->
+
+<!-- Extra Tops -->
+<a href="product.html?id=22" class="product-card" data-category="tops">
+  <img src="https://i.pinimg.com/736x/19/58/a9/1958a90d4da2f481b574d6ca4cd4c6aa.jpg" alt="Formal Top">
+  <h3>Formal Top</h3>
+  <p>$39.99</p>
+</a>
+<!--<a href="product.html?id=23" class="product-card" data-category="tops">
+  <img src="https://i.pinimg.com/736x/63/1c/22/631c220f0871f1e7e76763dd9b92ebed.jpg" alt="Tank Top">
+  <h3>Tank Top</h3>
+  <p>$14.99</p>
+</a>-->
+
+<!-- Extra Pants -->
+<a href="product.html?id=24" class="product-card" data-category="pants">
+  <img src="https://i.pinimg.com/1200x/7c/2e/e0/7c2ee0eff12fb3f080b97944eb3b14dc.jpg" alt="Cargo Pants">
+  <h3>Cargo Pants</h3>
+  <p>$49.99</p>
+</a>
+<!--<a href="product.html?id=25" class="product-card" data-category="pants">
+  <img src="https://i.pinimg.com/736x/48/63/71/486371b94395e9bf85e78e50dd40ee61.jpg" alt="Joggers">
+  <h3>Joggers</h3>
+  <p>$34.99</p>
+</a>-->
+
+<!-- Extra Accessories -->
+<a href="product.html?id=26" class="product-card" data-category="accessories">
+  <img src="https://i.pinimg.com/736x/a7/68/fa/a768fa525dd391bccf69bcb93f211742.jpg" alt="Necklace">
+  <h3>Gold Necklace</h3>
+  <p>$99.99</p>
+</a>
+<!--<a href="product.html?id=27" class="product-card" data-category="accessories">
+  <img src="https://i.pinimg.com/1200x/5d/bf/29/5dbf29c600d9555252c1853d1928591d.jpg" alt="Sunglasses">
+  <h3>Trendy Sunglasses</h3>
+  <p>$24.99</p>
+</a>-->
+
+<!-- New Skirts -->
+ <a href="product.html?id=28" class="product-card" data-category="skirts">
+  <img src="https://i.pinimg.com/1200x/e8/ab/7c/e8ab7c1fa448cf5319fdac66a753e8a3.jpg" alt="Skirt 3">
+  <h3>Pleated Midi Skirt</h3>
+  <p>₹999</p>
+ 
+</a>
+<a href="product.html?id=29"  class="product-card" data-category="skirts">
+  <img src="https://i.pinimg.com/736x/18/fb/71/18fb71d3955846a941b1703aec9d17eb.jpg" alt="Skirt 4">
+  <h3>A-Line Casual Skirt</h3>
+  <p>₹899</p>
+  
+</a>
+<!--<a href="product.html?id=30"  class="product-card" data-category="skirts">
+  <img src="https://i.pinimg.com/736x/c1/63/5e/c1635ef53875c2a578052f682818d2c9.jpg" alt="Skirt 5">
+  <h3>High Waist Pencil Skirt</h3>
+  <p>₹1099</p>
+  
+</a>-->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Elegant Fashion. All rights reserved.</p>
+    <div class="socials">
+      <a href="#">Instagram</a> | 
+      <a href="#">Facebook</a> | 
+      <a href="#">Twitter</a>
+    </div>
+  </footer>
+
+  <script>
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const products = document.querySelectorAll('.product-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-filter');
+        products.forEach(p => {
+          p.style.display = (category === 'all' || p.dataset.category === category) ? 'block' : 'none';
+        });
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+    filterBtns[0].click();
+  </script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist - Elegant Women Fashion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+   
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; z-index: 10; }
+    .navbar .logo { font-weight: 700; font-size: 1.8em; color: #d95d89; }
+    .navbar nav ul { display: flex; gap: 25px; list-style: none; margin: 0; padding: 0; }
+    .navbar nav ul li a { text-decoration: none; color: #222; font-weight: 600; transition: color 0.3s; }
+    .navbar nav ul li a:hover, .navbar nav ul li a.active { color: #d95d89; font-weight: 600; }
+    .cart-count, .wishlist-count { background: #d95d89; color: #fff; border-radius: 50%; padding: 2px 8px; font-size: 12px; margin-left: 5px; vertical-align: top; }
+    .wishlist-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+    .wishlist-container h1 { font-size: 2.5em; font-weight: 600; color: #222; margin: 0 0 20px; text-align: center; }
+    .wishlist-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .wishlist-table th, .wishlist-table td { padding: 15px; text-align: left; border-bottom: 1px solid #ddd; }
+    .wishlist-table th { background: #fff7f7; font-weight: 600; color: #222; }
+    .wishlist-table img { display: block; width: 80px; height: 80px; object-fit: cover; border-radius: 8px; background: #f0f0f0; }
+    .wishlist-table .btn-remove { padding: 8px 15px; background: #d9534f; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+    .wishlist-table .btn-remove:hover { background: #c9302c; }
+    .wishlist-table .btn-add-cart { padding: 8px 15px; background: #d95d89; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
+    .wishlist-table .btn-add-cart:hover { background: #c14a74; }
+    .empty-wishlist { text-align: center; padding: 40px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    .empty-wishlist p { font-size: 1.2em; color: #555; margin: 0 0 20px; }
+    .empty-wishlist a { padding: 10px 20px; background: #d95d89; color: #fff; text-decoration: none; border-radius: 5px; font-weight: 600; }
+    .empty-wishlist a:hover { background: #c14a74; }
+    footer { text-align: center; padding: 20px; background: #fff; box-shadow: 0 -2px 5px rgba(0,0,0,0.1); }
+    footer .socials a { color: #d95d89; text-decoration: none; margin: 0 10px; transition: color 0.3s; }
+    footer .socials a:hover { color: #c14a74; }
+    .dialog-box { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+    .dialog-content { background: #fff; padding: 20px; border-radius: 8px; max-width: 400px; width: 90%; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+    .dialog-content p { font-size: 1.1em; color: #222; margin: 0 0 20px; font-family: 'Poppins', sans-serif; }
+    .dialog-content button { padding: 10px 20px; background: #d95d89; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+    .dialog-content button:hover { background: #c14a74; }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Elegant Fashion</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html" >Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    
+      </ul>
+    </nav>
+  </header>
+
+  <section class="wishlist-container">
+    <h1>My Wishlist</h1>
+    <div id="wishlist-table"></div>
+  </section>
+
+  <div id="dialog-box" class="dialog-box">
+    <div class="dialog-content">
+      <p id="dialog-message"></p>
+      <button id="dialog-close">Close</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Elegant Fashion. All rights reserved.</p>
+      <div class="socials">
+        <a href="#">Instagram</a> | 
+        <a href="#">Facebook</a> | 
+        <a href="#">Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Show dialog box
+  function showDialog(message) {
+    const dialogBox = document.getElementById('dialog-box');
+    const dialogMessage = document.getElementById('dialog-message');
+    dialogMessage.textContent = message;
+    dialogBox.style.display = 'flex';
+  }
+
+  // Close dialog box
+  document.getElementById('dialog-close').addEventListener('click', () => {
+    document.getElementById('dialog-box').style.display = 'none';
+  });
+
+  // Update cart count
+  function updateCartCount() {
+    const cartCountElement = document.getElementById('cart-count');
+    if (!cartCountElement) {
+      console.warn('Cart count element not found');
+      return;
+    }
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    if (!Array.isArray(cart)) cart = [];
+    const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 0), 0);
+    cartCountElement.textContent = totalItems;
+  }
+
+  // Update wishlist count
+  function updateWishlistCount() {
+    const wishlistCountElement = document.getElementById('wishlist-count');
+    if (!wishlistCountElement) {
+      console.warn('Wishlist count element not found');
+      return;
+    }
+    let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    if (!Array.isArray(wishlist)) wishlist = [];
+    wishlistCountElement.textContent = wishlist.length;
+  }
+
+  // Render wishlist
+  function renderWishlist() {
+    const wishlistTable = document.getElementById('wishlist-table');
+    let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    if (!Array.isArray(wishlist)) wishlist = [];
+
+    console.log('Wishlist:', wishlist);
+
+    if (wishlist.length === 0) {
+      wishlistTable.innerHTML = `
+        <div class="empty-wishlist">
+          <p>Your wishlist is empty.</p>
+          <a href="shop.html">Shop Now</a>
+        </div>
+      `;
+      return;
+    }
+
+    let html = `
+      <table class="wishlist-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Details</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+    `;
+    wishlist.forEach((item, index) => {
+      const imageSrc = item.image && item.image !== '' ? item.image : 'https://via.placeholder.com/80x80?text=Image+Not+Found';
+      const displayPrice = item.currency ? `${item.currency}${item.price.toFixed(2)}` : `$${item.price.toFixed(2)}`;
+      html += `
+        <tr>
+          <td><img src="${imageSrc}" alt="${item.title}"></td>
+          <td>
+            <strong>${item.title}</strong><br>
+            Size: ${item.size}<br>
+            Color: ${item.color}
+          </td>
+          <td>${displayPrice}</td>
+          <td>
+            <button class="btn-add-cart" data-index="${index}">Add to Cart</button>
+            <button class="btn-remove" data-index="${index}">Remove</button>
+          </td>
+        </tr>
+      `;
+    });
+    html += '</tbody></table>';
+    wishlistTable.innerHTML = html;
+
+    // Add to Cart from Wishlist
+    document.querySelectorAll('.btn-add-cart').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const index = parseInt(btn.dataset.index);
+        let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        const item = wishlist[index];
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        if (!Array.isArray(cart)) cart = [];
+        const cartItem = { ...item, quantity: 1 };
+        const existingIndex = cart.findIndex(c => c.id === item.id && c.size === item.size && c.color === item.color);
+        if (existingIndex !== -1) {
+          cart[existingIndex].quantity += 1;
+        } else {
+          cart.push(cartItem);
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        wishlist.splice(index, 1);
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        showDialog(`✅ "${item.title}" added to cart!`);
+        renderWishlist();
+        updateCartCount();
+        updateWishlistCount();
+      });
+    });
+
+    // Remove from Wishlist
+    document.querySelectorAll('.btn-remove').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const index = parseInt(btn.dataset.index);
+        let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        const item = wishlist[index];
+        wishlist.splice(index, 1);
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        showDialog(`"${item.title}" removed from wishlist.`);
+        renderWishlist();
+        updateWishlistCount();
+      });
+    });
+
+    // Image error handling
+    document.querySelectorAll('.wishlist-table img').forEach(img => {
+      img.onerror = () => {
+        console.error(`Failed to load image: ${img.src}`);
+        img.src = 'https://via.placeholder.com/80x80?text=Image+Not+Found';
+      };
+    });
+  }
+
+  // Initialize
+  updateCartCount();
+  updateWishlistCount();
+  renderWishlist();
+});
+</script>
+</body>
+</html>

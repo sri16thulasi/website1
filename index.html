@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elegant Women Fashion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .navbar nav ul li a { text-decoration: none; color: #222; font-weight: 600; transition: color 0.3s; }
+    .navbar nav ul li a:hover, .navbar nav ul li a.active { color: #d95d89; font-weight: 600; }
+    .cart-count { background: #141213; color: #fff; border-radius: 50%; padding: 3px 9px; font-size: 12px; margin-left: 6px; vertical-align: top; }
+
+    /* Hero section background **/
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: left;
+      padding:80px;
+      min-height: 90vh;
+      background: url("https://i.pinimg.com/1200x/13/07/13/1307131bab1d1a70b7ec1dbe4881c294.jpg") no-repeat center center/cover;
+      color: #fff;
+      position: relative;
+    }
+
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+    }
+
+    .hero h1 {
+      
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+    }
+
+    .hero .btn {
+      background: #d95d89;
+      color: #fff;
+      padding: 12px 28px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .hero .btn:hover {
+      background: #b74b6e;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Elegant Fashion</div>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="shop.html">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero section with background image -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Discover Your Style</h1>
+      <p>Elegant and trendy women's fashion curated just for you.</p>
+      <a href="shop.html" class="btn">Shop Now</a>
+    </div>
+  </section>
+
+  <section class="featured">
+    <h2>Featured Collections</h2>
+    <div class="products">
+      <div class="product-card">
+        <img src="https://i.pinimg.com/736x/dd/d1/f7/ddd1f7eea60be6774bce56a3e50f4a95.jpg" alt="Summer Dress">
+        <h3>Summer Dress</h3>
+        <p>$49.99</p>
+        <a href="product.html?id=1" class="btn">View Details</a>
+      </div>
+      <div class="product-card">
+        <img src="https://as2.ftcdn.net/v2/jpg/15/75/74/29/1000_F_1575742910_Jt5v4exXOL0JffhHqx5npONaJ2j0KeaA.jpg" alt="Elegant Top">
+        <h3>Elegant Top</h3>
+        <p>$29.99</p>
+        <a href="product.html?id=2" class="btn">View Details</a>
+      </div>
+      <div class="product-card">
+        <img src="https://i.pinimg.com/736x/a6/db/5d/a6db5d6e298dcdb76f5a93ff28bbc51f.jpg" alt="Casual Pant">
+        <h3>Casual Pant</h3>
+        <p>$39.99</p>
+        <a href="product.html?id=3" class="btn">View Details</a>
+      </div>
+      <div class="product-card">
+        <img src="https://i.pinimg.com/736x/9f/a3/b5/9fa3b5c63747fd21cc931c5e6053a5b7.jpg" alt="Chic Skirt">
+        <h3>Chic Skirt</h3>
+        <p>$34.99</p>
+        <a href="product.html?id=4" class="btn">View Details</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="categories">
+    <h2>Shop by Category</h2>
+    <div class="category-cards">
+      <div class="category-card">
+        <a href="shop.html?category=dresses">
+          <img src="https://t3.ftcdn.net/jpg/13/92/62/26/240_F_1392622653_47CrVUZhaRq3855NMVmjjmuHbkw4NKM6.jpg" alt="Dresses">
+          <h3>Dresses</h3>
+        </a>
+      </div>
+      <div class="category-card">
+        <a href="shop.html?category=tops">
+          <img src="https://t4.ftcdn.net/jpg/16/05/44/37/240_F_1605443798_hRgPG1cXcV5ebbhqaQq8NultGIGq0DEe.jpg" alt="Tops">
+          <h3>Tops</h3>
+        </a>
+      </div>
+      <div class="category-card">
+        <a href="shop.html?category=pants">
+          <img src="https://i.pinimg.com/736x/55/06/b1/5506b1c65fbdaaa9716ad18698004e6c.jpg" alt="Pants">
+          <h3>Pants</h3>
+        </a>
+      </div>
+      <div class="category-card">
+        <a href="shop.html?category=accessories">
+          <img src="https://i.pinimg.com/736x/d3/f1/09/d3f109f9b60b2964d1873cffb0699d83.jpg" alt="Accessories">
+          <h3>Accessories</h3>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Elegant Fashion. All rights reserved.</p>
+      <div class="socials">
+        <a href="#">Instagram</a> | 
+        <a href="#">Facebook</a> | 
+        <a href="#">Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const cartCountElement = document.getElementById('cart-count');
+
+    // Update cart count
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const totalItems = cart.reduce((sum, item) => sum + (item.selected ? (item.quantity || 0) : 0), 0);
+      cartCountElement.textContent = totalItems;
+    }
+
+    // Initialize
+    updateCartCount();
+  </script>
+</body>
+</html>

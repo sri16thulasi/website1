@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You - Elegant Women Fashion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #fceaff, #e0f7ff);
+      color: #222;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Floating shapes */
+    .floating-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .shape {
+      position: absolute;
+      opacity: 0.25;
+      filter: blur(1.5px);
+      animation: float 25s linear infinite;
+    }
+    .shape.triangle { width: 0; height: 0; border-left: 25px solid transparent; border-right: 25px solid transparent; border-bottom: 50px solid #d95d89; }
+    .shape.square { width: 40px; height: 40px; background: #c14a74; border-radius: 8px; }
+    .shape.diamond { width: 40px; height: 40px; background: #f7a1c4; transform: rotate(45deg); border-radius: 4px; }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0.1; }
+      50% { opacity: 0.25; }
+      100% { transform: translateY(-20vh) rotate(360deg); opacity: 0.1; }
+    }
+
+    .shape1 { top: 10%; left: 10%; animation-duration: 28s; }
+    .shape2 { top: 50%; left: 80%; animation-duration: 32s; }
+    .shape3 { top: 70%; left: 40%; animation-duration: 26s; }
+
+    /* Navbar */
+    .navbar {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 20px 60px;
+      background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative; z-index: 2;
+    }
+    .navbar .logo { font-weight: 700; font-size: 1.8em; color: #d95d89; }
+    .navbar nav ul { display: flex; gap: 25px; list-style: none; margin: 0; padding: 0; }
+    .navbar nav ul li a { text-decoration: none; color: #222; font-weight: 500; transition: color 0.3s; }
+    .navbar nav ul li a:hover, .navbar nav ul li a.active { color: #d95d89; font-weight: 600; }
+
+    /* Main content */
+    .thank-you-container {
+      max-width: 900px;
+      margin: 60px auto 40px;
+      padding: 0 20px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .thank-you-container h1 {
+      font-size: 2.8em;
+      font-weight: 700;
+      color: #d95d89;
+      margin-bottom: 15px;
+      animation: fadeIn 1s ease;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .thank-you-container p {
+      font-size: 1.2em; color: #555;
+      margin-bottom: 40px;
+    }
+
+    /* Order Details Card - Glassmorphism */
+    .order-details {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+      text-align: left;
+      animation: slideUp 0.6s ease;
+    }
+    .order-details h2 { font-size: 1.6em; font-weight: 600; margin-bottom: 20px; }
+    .order-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+    .order-item p { margin: 5px 0; font-size: 0.95em; }
+    .summary-item {
+      display: flex; justify-content: space-between;
+      font-size: 0.95em; color: #555; margin-bottom: 10px;
+    }
+    .summary-item.total { font-size: 1.2em; font-weight: 600; color: #222; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 15px; margin-top: 15px; }
+
+    /* Button */
+    .continue-btn {
+      display: inline-block;
+      padding: 15px 35px;
+      background: linear-gradient(135deg, #d95d89, #f7a1c4);
+      color: #fff; text-decoration: none;
+      border-radius: 50px; font-weight: 600;
+      box-shadow: 0 6px 20px rgba(217,93,137,0.4);
+      transition: all 0.3s;
+    }
+    .continue-btn:hover {
+      background: linear-gradient(135deg, #c14a74, #ff8aa0);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(217,93,137,0.5);
+    }
+
+    /* Animations */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Footer */
+    footer {
+      text-align: center; padding: 25px;
+      background: #fff;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      position: relative; z-index: 2;
+    }
+    footer .socials a { color: #d95d89; margin: 0 10px; text-decoration: none; transition: color 0.3s; }
+    footer .socials a:hover { color: #c14a74; }
+
+  </style>
+</head>
+<body>
+  <!-- Floating Shapes -->
+  <div class="floating-shapes">
+    <div class="shape triangle shape1"></div>
+    <div class="shape square shape2"></div>
+    <div class="shape diamond shape3"></div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">Elegant Fashion</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html" class="active">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Thank You Section -->
+  <div class="thank-you-container">
+    <h1>Thank You for Your Purchase!</h1>
+    <p>We appreciate your order. You'll receive a confirmation soon. Visit again!</p>
+    <div class="order-details">
+      <h2>Order Details</h2>
+      <div id="order-items"></div>
+      <div id="order-summary"></div>
+    </div>
+    <a href="shop.html" class="continue-btn">Continue Shopping</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 Elegant Fashion. All rights reserved.</p>
+    <div class="socials">
+      <a href="#">Instagram</a> | 
+      <a href="#">Facebook</a> | 
+      <a href="#">Twitter</a>
+    </div>
+  </footer>
+
+  <script>
+    const orderItemsDiv = document.getElementById('order-items');
+    const orderSummaryDiv = document.getElementById('order-summary');
+
+    // Render order details
+    function renderOrderDetails() {
+      const order = JSON.parse(localStorage.getItem('lastOrder') || '{}');
+      if (!order.id) {
+        orderItemsDiv.innerHTML = '<p>No order details available.</p>';
+        orderSummaryDiv.innerHTML = '';
+        return;
+      }
+
+      orderItemsDiv.innerHTML = order.items.map(item => `
+        <div class="order-item">
+          <p><strong>${item.title}</strong></p>
+          <p>Size: ${item.size} | Color: ${item.color}</p>
+          <p>Quantity: ${item.quantity}</p>
+          <p>Price: $${(item.price * item.quantity).toFixed(2)}</p>
+        </div>
+      `).join('');
+
+      orderSummaryDiv.innerHTML = `
+        <div class="summary-item"><span>Order ID</span><span>${order.id}</span></div>
+        <div class="summary-item"><span>Date</span><span>${new Date(order.date).toLocaleDateString()}</span></div>
+        <div class="summary-item"><span>Status</span><span>${order.status}</span></div>
+        <div class="summary-item"><span>Shipping</span><span>${order.shipping.name}, ${order.shipping.address}, ${order.shipping.city}, ${order.shipping.zip}</span></div>
+        <div class="summary-item"><span>Method</span><span>${order.shipping.method === 'standard' ? 'Standard (5-7 days)' : 'Express (2-3 days)'}</span></div>
+        <div class="summary-item"><span>Subtotal</span><span>$${order.subtotal.toFixed(2)}</span></div>
+        <div class="summary-item"><span>Shipping Cost</span><span>$${order.shippingCost.toFixed(2)}</span></div>
+        <div class="summary-item total"><span>Total</span><span>$${order.total.toFixed(2)}</span></div>
+      `;
+    }
+
+    renderOrderDetails();
+  </script>
+</body>
+</html>

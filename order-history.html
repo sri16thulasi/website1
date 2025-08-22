@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order History - Elegant Women Fashion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0; padding: 0;
+      background: linear-gradient(135deg, #fceaff, #e0f7ff);
+      color: #222;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    
+    .navbar { display: flex; justify-content: space-between; align-items: center; padding: 20px 60px; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; z-index: 10; }
+    .navbar .logo { font-weight: 700; font-size: 1.8em; color: #d95d89; }
+    .navbar nav ul { display: flex; gap: 25px; list-style: none; margin: 0; padding: 0; }
+    .navbar nav ul li a { text-decoration: none; color: #222; font-weight: 600; transition: color 0.3s; }
+    .navbar nav ul li a:hover, .navbar nav ul li a.active { color: #d95d89; font-weight: 600; }
+
+    /* Floating Shapes */
+    .floating-shapes { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+    .shape { position: absolute; opacity: 0.75; filter: blur(2px); animation: float 25s linear infinite; }
+    .shape.triangle { width: 0; height: 0; border-left: 25px solid transparent; border-right: 25px solid transparent; border-bottom: 50px solid #d95d89; }
+    .shape.square { width: 40px; height: 40px; background: #c14a74; border-radius: 8px; }
+    .shape.polygon { width: 50px; height: 50px; background: #ffb6b9; clip-path: polygon(50% 0%, 95% 35%, 77% 100%, 23% 100%, 5% 35%); border-radius: 5px; }
+    .shape.diamond { width: 40px; height: 40px; background: #f7a1c4; transform: rotate(45deg); border-radius: 4px; }
+    @keyframes float { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0.1; } 50% { opacity: 0.25; } 100% { transform: translateY(-20vh) rotate(360deg); opacity: 0.1; } }
+    .shape1 { top: 15%; left: 10%; animation-duration: 28s; }
+    .shape2 { top: 50%; left: 75%; animation-duration: 32s; }
+    .shape3 { top: 65%; left: 40%; animation-duration: 26s; }
+    .shape4 { top: 30%; left: 60%; animation-duration: 30s; }
+    .shape5 { top: 10%; left: 25%; animation-duration: 24s; }
+
+    .history-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; position: relative; z-index: 1; }
+    .history-container h1 { font-size: 2em; font-weight: 600; color: #222; margin: 0 0 30px; text-shadow: 1px 1px 3px rgba(0,0,0,0.1); }
+
+    /* Glassmorphism Order Card */
+    .order {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .order:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+    }
+
+    .order h3 { margin: 0 0 10px; font-size: 1.4em; color: #d95d89; }
+    .order p { margin: 5px 0; font-size: 0.95em; color: #444; }
+    .order-items { margin: 15px 0; }
+    .order-item { margin-bottom: 12px; position: relative; padding-right: 90px; }
+
+    /* Circle Shape for Order Items */
+    .order-item-circle {
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #d95d89, #ffe4e9);
+      border-radius: 50%;
+      opacity: 0.9;
+      transform: translateY(-50%);
+      box-shadow: 0 6px 15px rgba(217, 93, 137, 0.4), 0 0 15px rgba(255, 204, 213, 0.6), 0 0 25px rgba(255, 228, 233, 0.5);
+      animation: floatCircle 6s ease-in-out infinite;
+    }
+
+    @keyframes floatCircle {
+      0% { transform: translateY(-50%) translateY(0); opacity: 0.9; }
+      50% { transform: translateY(-50%) translateY(-10px); opacity: 1; }
+      100% { transform: translateY(-50%) translateY(0); opacity: 0.9; }
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      .order-item { padding-right: 60px; }
+      .order-item-circle { width: 40px; height: 40px; right: 10px; }
+    }
+
+    .track-btn {
+      padding: 10px 18px;
+      background: linear-gradient(135deg, #d95d89, #f7a1c4);
+      color: #fff; border: none; border-radius: 8px; cursor: pointer;
+      transition: all 0.3s; box-shadow: 0 5px 15px rgba(217,93,137,0.4);
+    }
+    .track-btn:hover {
+      background: linear-gradient(135deg, #c14a74, #ff8aa0);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(217,93,137,0.5);
+    }
+
+    .empty-history {
+      text-align: center; padding: 50px;
+      background: rgba(255,255,255,0.6); backdrop-filter: blur(12px);
+      border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    }
+    .empty-history p { font-size: 1.4em; color: #555; margin-bottom: 20px; }
+    .empty-history a { display: inline-block; padding: 14px 28px; background: #d95d89; color: #fff; text-decoration: none; border-radius: 10px; font-weight: 600; transition: all 0.3s; }
+    .empty-history a:hover { background: #c14a74; transform: translateY(-2px); }
+
+    .dialog-overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+    .dialog-box { background: #fff; border-radius: 12px; padding: 20px; max-width: 400px; text-align: center; box-shadow: 0 6px 20px rgba(0,0,0,0.25); animation: dialogFadeIn 0.3s ease; }
+    .dialog-box p { margin: 0 0 20px; font-size: 1em; color: #222; }
+    .dialog-btn { padding: 10px 20px; background: #d95d89; color: #fff; border: none; border-radius: 6px; cursor: pointer; transition: background 0.3s; }
+    .dialog-btn:hover { background: #c14a74; }
+
+    @keyframes dialogFadeIn { from { opacity:0; transform: scale(0.8); } to { opacity:1; transform: scale(1); } }
+
+    footer { text-align: center; padding: 25px; background: #fff; box-shadow: 0 -2px 5px rgba(0,0,0,0.1); border-radius: 20px 20px 0 0; position: relative; z-index: 2; }
+    footer .footer-content { max-width: 1200px; margin: 0 auto; }
+    footer .socials a { color: #d95d89; text-decoration: none; margin: 0 10px; transition: color 0.3s; }
+    footer .socials a:hover { color: #c14a74; }
+  </style>
+</head>
+<body>
+  <!-- Floating Shapes -->
+  <div class="floating-shapes">
+    <div class="shape triangle shape1"></div>
+    <div class="shape square shape2"></div>
+    <div class="shape polygon shape3"></div>
+    <div class="shape diamond shape4"></div>
+    <div class="shape triangle shape5"></div>
+  </div>
+
+  <header class="navbar">
+    <div class="logo">Elegant Fashion</div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="shop.html" class="active">Shop</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="history-container">
+    <h1>Order History</h1>
+    <div id="orders"></div>
+  </div>
+
+  <div class="dialog-overlay" id="dialog-overlay">
+    <div class="dialog-box" id="dialog-box">
+      <p id="dialog-message"></p>
+      <button class="dialog-btn" id="dialog-btn">OK</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 Elegant Fashion. All rights reserved.</p>
+      <div class="socials">
+        <a href="#">Instagram</a> | 
+        <a href="#">Facebook</a> | 
+        <a href="#">Twitter</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const ordersDiv = document.getElementById('orders');
+
+    function renderOrders() {
+      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+      ordersDiv.innerHTML = '';
+
+      if (orders.length === 0) {
+        ordersDiv.innerHTML = `
+          <div class="empty-history">
+            <p>No orders found!</p>
+            <a href="shop.html">Start Shopping</a>
+          </div>
+        `;
+        return;
+      }
+
+      orders.forEach(order => {
+        const div = document.createElement('div');
+        div.className = 'order';
+        div.innerHTML = `
+          <h3>Order ${order.id}</h3>
+          <p>Date: ${new Date(order.date).toLocaleDateString()}</p>
+          <p>Status: ${order.status}</p>
+          <p>Shipping: ${order.shipping.name}, ${order.shipping.address}, ${order.shipping.city}, ${order.shipping.zip}</p>
+          <p>Method: ${order.shipping.method === 'standard' ? 'Standard ($5.00)' : 'Express ($15.00)'}</p>
+          <div class="order-items">
+            ${order.items.map(item => `
+              <div class="order-item">
+                <p><strong>${item.title}</strong></p>
+                <p>Size: ${item.size} | Color: ${item.color} | Quantity: ${item.quantity}</p>
+                <p>Price: $${(item.price * item.quantity).toFixed(2)}</p>
+                <div class="order-item-circle"></div>
+              </div>
+            `).join('')}
+          </div>
+          <p>Subtotal: $${order.subtotal.toFixed(2)}</p>
+          <p>Shipping: $${order.shippingCost.toFixed(2)}</p>
+          <p>Total: $${order.total.toFixed(2)}</p>
+          <button class="track-btn" data-id="${order.id}">Track Order</button>
+        `;
+        ordersDiv.appendChild(div);
+      });
+
+      document.querySelectorAll('.track-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const orderId = e.target.dataset.id;
+          localStorage.setItem('trackOrderId', orderId);
+          window.location.href = 'track-order.html';
+        });
+      });
+    }
+
+    renderOrders();
+  </script>
+</body>
+</html>
